@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.mesh-gradient-bg {
+    background-color: #fff8f6;
+    background-image:
+        radial-gradient(at 0% 0%, rgba(255, 108, 55, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(77, 142, 254, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(255, 108, 55, 0.1) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(77, 142, 254, 0.1) 0px, transparent 50%);
+}
+.glass-card {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
