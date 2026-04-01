@@ -1,168 +1,257 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function App() {
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState([
+    { id: 1, name: 'Anonymous', message: 'Hello from Paris!', time: 'Now' }
+  ]);
+  const [userName, setUserName] = useState('');
+  const [newMessage, setNewMessage] = useState('');
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    if (newMessage.trim()) {
+      setChatMessages([
+        ...chatMessages,
+        {
+          id: Date.now(),
+          name: userName.trim() || 'Anonymous',
+          message: newMessage.trim(),
+          time: 'Just now'
+        }
+      ]);
+      setNewMessage('');
+    }
+  };
+
   return (
-    <div className="bg-background text-on-background font-body mesh-gradient-bg min-h-screen">
+    <div className="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container nebula-bg min-h-screen">
       {/* TopAppBar */}
-      <header className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 py-4 bg-white/60 dark:bg-black/60 backdrop-blur-[20px] border-b border-white/15 shadow-[0_20_40px_rgba(60,45,40,0.06)]">
-        <div className="flex flex-col">
-          <h1 className="text-2xl font-black text-slate-900 dark:text-white font-['Inter'] tracking-tight display-lg">
-            Agents &amp; APIs Paris
-          </h1>
-          <p className="text-[10px] uppercase tracking-[0.1em] font-bold text-[#ac3500]">
-            Monsieur Maillot, Tonight
-          </p>
+      <header className="fixed top-0 w-full z-50 bg-[#10141a]/60 backdrop-blur-xl border-b border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] flex items-center justify-between px-6 h-16 w-full">
+        <div className="flex items-center gap-3">
+          <span className="material-symbols-outlined text-[#FF6C37]" data-icon="hub">hub</span>
+          <h1 className="text-xl font-black text-white font-headline tracking-tighter">Agents & APIs Paris</h1>
         </div>
-        <div className="flex items-center gap-4">
-          <span className="material-symbols-outlined text-[#ac3500] cursor-pointer hover:opacity-80 transition-opacity active:scale-95 duration-200" data-icon="location_on">
-            location_on
-          </span>
-        </div>
+        <button
+          onClick={() => setIsShareModalOpen(true)}
+          className="active:scale-95 transition-transform text-slate-400 hover:text-[#FF6C37] transition-colors"
+        >
+          <span className="material-symbols-outlined" data-icon="share">share</span>
+        </button>
       </header>
 
-      <main className="pt-28 pb-32 px-6 max-w-2xl mx-auto">
-        {/* Section Header */}
-        <div className="mb-10">
-          <h2 className="text-[3.5rem] font-black leading-[1.1] tracking-tight text-slate-900 mb-2">Agenda</h2>
-          <div className="w-12 h-1 bg-primary-container rounded-full"></div>
-        </div>
+      <main className="pt-24 pb-32 px-6 max-w-2xl mx-auto space-y-12">
+        {/* Hero Branding */}
+        <section className="space-y-2">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+            <span className="text-[#FF6C37] font-label font-bold text-[10px] uppercase tracking-[0.2em]">Live from Paris</span>
+          </div>
+          <h2 className="text-4xl font-headline font-extrabold tracking-tighter leading-none text-white">The Digital Nebula.</h2>
+          <p className="text-on-surface-variant text-sm font-medium opacity-80">Where AI automation meets professional API scaling.</p>
+        </section>
 
-        {/* Agenda Grid */}
-        <div className="space-y-8">
-          {/* Session 1 */}
-          <div className="glass-card bg-white/70 border border-white/40 p-6 rounded-xl shadow-[0_20px_40px_rgba(60,45,40,0.06)] hover:-translate-y-1 transition-all duration-300 group">
-            <div className="flex items-start justify-between mb-4">
-              <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/10">
-                <span className="text-[0.75rem] font-bold text-primary tracking-wider font-['Inter'] uppercase">
-                  18:30
-                </span>
+        {/* Official Agenda Section */}
+        <section className="space-y-6" id="sessions">
+          <div className="flex items-end justify-between">
+            <h3 className="text-2xl font-headline font-bold tracking-tight text-white">Official Agenda</h3>
+            <span className="text-[#FF6C37] font-label font-bold text-[10px] uppercase tracking-widest pb-1">Current Track</span>
+          </div>
+          <div className="space-y-4">
+            <div className="glass-card p-6 rounded-xl space-y-4">
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 rounded-full bg-secondary-container/20 text-secondary text-[10px] font-bold uppercase tracking-wider">Cloud Native</span>
               </div>
-              <span className="material-symbols-outlined text-secondary" data-icon="auto_awesome">
-                auto_awesome
-              </span>
+              <div className="space-y-2">
+                <h4 className="text-lg font-headline font-bold text-white leading-tight">Automating Code with Antigravity and Gemini CLI</h4>
+                <p className="text-sm text-on-surface-variant leading-relaxed">Cyrena Ramdani (AI Solutions Specialist, Google Cloud): Sharing practical examples of using Antigravity and the Gemini CLI to automate code creation and testing directly from your terminal or IDE.</p>
+              </div>
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-1 leading-tight group-hover:text-primary transition-colors">
-              Cyrena Ramdani
-            </h3>
-            <p className="text-sm font-medium text-slate-600">AI Solutions Specialist, Google Cloud</p>
-            <div className="mt-4 flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-secondary"></div>
-              <span className="text-[10px] uppercase tracking-widest font-bold text-slate-400">
-                Google Cloud Technical Session
-              </span>
+            <div className="glass-card p-6 rounded-xl space-y-4 border-l-2 border-l-[#4285F4]">
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 rounded-full bg-secondary-container/20 text-secondary text-[10px] font-bold uppercase tracking-wider">Enterprise AI</span>
+              </div>
+              <div className="space-y-2">
+                <h4 className="text-lg font-headline font-bold text-white leading-tight">The Vision of Gemini Enterprise & Stitch</h4>
+                <p className="text-sm text-on-surface-variant leading-relaxed">Simon Lebrun (Product Manager, Google Cloud): Discussing the vision behind Gemini Enterprise, AI Studio, and Stitch to democratize application development.</p>
+              </div>
+            </div>
+            <div className="glass-card p-6 rounded-xl space-y-4 border-l-2 border-l-[#FF6C37]">
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 rounded-full bg-primary-container/20 text-primary-container text-[10px] font-bold uppercase tracking-wider">MCP Protocol</span>
+              </div>
+              <div className="space-y-2">
+                <h4 className="text-lg font-headline font-bold text-white leading-tight">Translating APIs into MCP Tools with reShapr</h4>
+                <p className="text-sm text-on-surface-variant leading-relaxed">Yacine Kheddache (Director of Product, Postman): Demonstrating how existing APIs can be translated into MCP tools without writing code using reShapr.</p>
+              </div>
+            </div>
+            <div className="glass-card p-6 rounded-xl space-y-4">
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 rounded-full bg-primary-container/20 text-primary-container text-[10px] font-bold uppercase tracking-wider">API Evolution</span>
+              </div>
+              <div className="space-y-2">
+                <h4 className="text-lg font-headline font-bold text-white leading-tight">Postman as an AI Native Platform</h4>
+                <p className="text-sm text-on-surface-variant leading-relaxed">Gbadebo Bello (Developer Advocate, Postman): Walking through new features in Postman and its evolution into an AI Native Platform for APIs.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Speaker Hub Section */}
+        <section className="space-y-6" id="speakers">
+          <h3 className="text-2xl font-headline font-bold tracking-tight text-white">Speaker Hub</h3>
+          <div className="grid grid-cols-2 gap-4">
+            {[
+              { name: 'Cyrena Ramdani', company: 'Google Cloud', icon: 'cognition', color: '#4285F4', bgColor: 'bg-secondary-container/30' },
+              { name: 'Simon Lebrun', company: 'Google Cloud', icon: 'cloud', color: '#4285F4', bgColor: 'bg-secondary-container/30' },
+              { name: 'Yacine Kheddache', company: 'Postman', icon: 'api', color: '#FF6C37', bgColor: 'bg-primary-container/30' },
+              { name: 'Gbadebo Bello', company: 'Postman', icon: 'terminal', color: '#FF6C37', bgColor: 'bg-primary-container/30' },
+            ].map((speaker, idx) => (
+              <div key={idx} className="glass-card p-5 rounded-2xl flex flex-col items-center text-center space-y-3">
+                <div className={`w-16 h-16 rounded-full ${speaker.bgColor} flex items-center justify-center`} style={{ color: speaker.color }}>
+                  <span className="material-symbols-outlined text-3xl" data-icon={speaker.icon}>{speaker.icon}</span>
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-tighter" style={{ color: speaker.color }}>{speaker.company}</p>
+                  <p className="text-sm font-headline font-bold text-white">{speaker.name}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Live Chat Wall Section */}
+        <section className="space-y-6" id="chat">
+          <div className="flex items-center justify-between">
+            <h3 className="text-2xl font-headline font-bold tracking-tight text-white">Live Chat Wall</h3>
+            <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 text-[10px] font-bold uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              Live Now
             </div>
           </div>
 
-          {/* Session 2 */}
-          <div className="glass-card bg-white/70 border border-white/40 p-6 rounded-xl shadow-[0_20px_40px_rgba(60,45,40,0.06)] hover:-translate-y-1 transition-all duration-300 group">
-            <div className="flex items-start justify-between mb-4">
-              <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/10">
-                <span className="text-[0.75rem] font-bold text-primary tracking-wider font-['Inter'] uppercase">
-                  19:00
-                </span>
+          <div className="space-y-4 max-h-60 overflow-y-auto mb-6 pr-2">
+            {chatMessages.map((msg) => (
+              <div key={msg.id} className="glass-card p-4 rounded-xl border-l-4 border-l-primary-container">
+                <div className="flex justify-between items-start mb-1">
+                  <span className="text-xs font-bold text-primary-container">{msg.name}</span>
+                  <span className="text-[10px] text-slate-500">{msg.time}</span>
+                </div>
+                <p className="text-sm text-on-surface">{msg.message}</p>
               </div>
-              <span className="material-symbols-outlined text-secondary" data-icon="deployed_code">
-                deployed_code
-              </span>
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-1 leading-tight group-hover:text-primary transition-colors">
-              Simon Lebrun
-            </h3>
-            <p className="text-sm font-medium text-slate-600">Product Manager, Google Cloud</p>
-            <div className="mt-4 flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-secondary"></div>
-              <span className="text-[10px] uppercase tracking-widest font-bold text-slate-400">
-                API Ecosystems &amp; Strategy
-              </span>
-            </div>
+            ))}
           </div>
 
-          {/* Session 3 */}
-          <div className="glass-card bg-white/70 border border-white/40 p-6 rounded-xl shadow-[0_20px_40px_rgba(60,45,40,0.06)] hover:-translate-y-1 transition-all duration-300 group">
-            <div className="flex items-start justify-between mb-4">
-              <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/10">
-                <span className="text-[0.75rem] font-bold text-primary tracking-wider font-['Inter'] uppercase">
-                  19:30
-                </span>
+          <form onSubmit={handleSendMessage} className="glass-card rounded-2xl p-6 space-y-6">
+            <div className="space-y-4">
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">First Name</label>
+                <input
+                  className="w-full bg-surface-container-lowest border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[#FF6C37] transition-all placeholder:text-slate-600 text-on-surface"
+                  placeholder="Developer name..."
+                  type="text"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                />
               </div>
-              <span className="material-symbols-outlined text-primary" data-icon="api">
-                api
-              </span>
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Message</label>
+                <textarea
+                  className="w-full bg-surface-container-lowest border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[#FF6C37] transition-all placeholder:text-slate-600 resize-none text-on-surface"
+                  placeholder="What's on your mind?"
+                  rows="3"
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  required
+                ></textarea>
+              </div>
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-1 leading-tight group-hover:text-primary transition-colors">
-              Yacine Kheddache
-            </h3>
-            <p className="text-sm font-medium text-slate-600">
-              Co-founder of Microcks &amp; Director of Product Strategy &amp; Innovation, Postman
-            </p>
-            <div className="mt-4 flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-primary"></div>
-              <span className="text-[10px] uppercase tracking-widest font-bold text-slate-400">
-                The Future of Mocking &amp; APIs
-              </span>
-            </div>
-          </div>
+            <button type="submit" className="w-full bg-gradient-to-br from-primary-container to-[#ff8c57] text-white font-bold py-4 rounded-xl shadow-[0_4px_20px_rgba(255,108,55,0.3)] active:scale-95 transition-all flex items-center justify-center gap-2">
+              <span className="material-symbols-outlined text-lg" data-icon="send">send</span>
+              Send Message
+            </button>
+          </form>
+        </section>
 
-          {/* Session 4 */}
-          <div className="glass-card bg-white/70 border border-white/40 p-6 rounded-xl shadow-[0_20px_40px_rgba(60,45,40,0.06)] hover:-translate-y-1 transition-all duration-300 group">
-            <div className="flex items-start justify-between mb-4">
-              <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/10">
-                <span className="text-[0.75rem] font-bold text-primary tracking-wider font-['Inter'] uppercase">
-                  20:00
-                </span>
+        {/* Location Section */}
+        <section className="space-y-6" id="location">
+          <h3 className="text-2xl font-headline font-bold tracking-tight text-white">Location</h3>
+          <div className="glass-card rounded-3xl overflow-hidden aspect-video relative group">
+            <img className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-700" alt="Paris location" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXj9FwKaQ6i6V6VHVjOz8zBavg1x6Uc8T3lCUOGNE9mhQghUw9mojaa2IbCvb_8FCULQpnOBSwAGopTYLKQKtJlvljTtESy_LlNLjlj-F40ak4AHEA36G_RmstAJt3dxuT2TnLQGDsy1maHlbPMx0BZFjCjBcEDGTXPbjDPr72TLhWBc1mxi3Ns5-jji8afxZwwnkDRoi2he9QNXsmdMqqYItYW2Zi0osu2IStprks_bZdXwkE5Zc-cb6HTeDXmAPuesBpxYSVvRY"/>
+            <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center space-y-2 pointer-events-none">
+              <div className="bg-primary-container/20 p-4 rounded-full backdrop-blur-md border border-primary-container/30">
+                <span className="material-symbols-outlined text-4xl text-[#FF6C37]" data-icon="location_on">location_on</span>
               </div>
-              <span className="material-symbols-outlined text-primary" data-icon="terminal">
-                terminal
-              </span>
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-1 leading-tight group-hover:text-primary transition-colors">
-              Gbadebo Bello
-            </h3>
-            <p className="text-sm font-medium text-slate-600">Developer Advocate, Postman</p>
-            <div className="mt-4 flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-primary"></div>
-              <span className="text-[10px] uppercase tracking-widest font-bold text-slate-400">
-                Agentic Workflows in Action
-              </span>
+              <div className="bg-[#10141a]/80 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10">
+                <p className="font-bold text-white">Google Paris / Postman HQ</p>
+                <p className="text-xs text-slate-400">8 Rue de Londres, 75009 Paris</p>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
       </main>
 
       {/* BottomNavBar */}
-      <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe h-20 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-[20px] border-t border-white/15 shadow-[0_-10px_30px_rgba(0,0,0,0.05)] rounded-t-[1.5rem]">
-        <a className="flex flex-col items-center justify-center text-[#ff6c37] bg-[#ff6c37]/10 rounded-2xl px-4 py-1 active:scale-90 transition-transform" href="#">
-          <span className="material-symbols-outlined" data-icon="calendar_today">
-            calendar_today
-          </span>
-          <span className="font-['Inter'] text-[10px] uppercase tracking-[0.05em] font-bold">Agenda</span>
+      <nav className="fixed bottom-0 w-full z-50 bg-[#10141a]/40 backdrop-blur-2xl rounded-t-3xl border-t border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] flex justify-around items-center h-20 px-4 pb-2">
+        <a className="flex flex-col items-center justify-center bg-[#FF6C37]/20 text-[#FF6C37] rounded-xl px-3 py-1 tap-highlight-transparent" href="#sessions">
+          <span className="material-symbols-outlined" data-icon="event_note">event_note</span>
+          <span className="font-label text-[10px] uppercase tracking-widest font-bold">Sessions</span>
         </a>
-        <a className="flex flex-col items-center justify-center text-slate-400 hover:text-[#4d8efe] transition-colors active:scale-90 transition-transform" href="#">
-          <span className="material-symbols-outlined" data-icon="record_voice_over">
-            record_voice_over
-          </span>
-          <span className="font-['Inter'] text-[10px] uppercase tracking-[0.05em] font-bold">Speakers</span>
+        <a className="flex flex-col items-center justify-center text-slate-400 opacity-70 hover:bg-white/5 transition-colors" href="#speakers">
+          <span className="material-symbols-outlined" data-icon="groups">groups</span>
+          <span className="font-label text-[10px] uppercase tracking-widest font-bold">Speakers</span>
         </a>
-        <a className="flex flex-col items-center justify-center text-slate-400 hover:text-[#4d8efe] transition-colors active:scale-90 transition-transform" href="#">
-          <span className="material-symbols-outlined" data-icon="diversity_3">
-            diversity_3
-          </span>
-          <span className="font-['Inter'] text-[10px] uppercase tracking-[0.05em] font-bold">Icebreaker</span>
+        <a className="flex flex-col items-center justify-center text-slate-400 opacity-70 hover:bg-white/5 transition-colors" href="#chat">
+          <span className="material-symbols-outlined" data-icon="forum">forum</span>
+          <span className="font-label text-[10px] uppercase tracking-widest font-bold">Chat</span>
         </a>
-        <a className="flex flex-col items-center justify-center text-slate-400 hover:text-[#4d8efe] transition-colors active:scale-90 transition-transform" href="#">
-          <span className="material-symbols-outlined" data-icon="sensors">
-            sensors
-          </span>
-          <span className="font-['Inter'] text-[10px] uppercase tracking-[0.05em] font-bold">Live Wall</span>
+        <a className="flex flex-col items-center justify-center text-slate-400 opacity-70 hover:bg-white/5 transition-colors" href="#location">
+          <span className="material-symbols-outlined" data-icon="location_on">location_on</span>
+          <span className="font-label text-[10px] uppercase tracking-widest font-bold">Location</span>
         </a>
       </nav>
 
-      {/* FAB */}
-      <button className="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-40">
-        <span className="material-symbols-outlined" data-icon="add" style={{ fontVariationSettings: "'FILL' 1" }}>
-          add
-        </span>
-      </button>
+      {/* Share Modal */}
+      {isShareModalOpen && (
+        <div className="fixed inset-0 z-[100] bg-surface/90 backdrop-blur-md flex items-center justify-center p-6">
+          <div className="glass-card w-full max-w-sm rounded-3xl p-8 space-y-6 relative border-primary-container/20">
+            <button
+              onClick={() => setIsShareModalOpen(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white"
+            >
+              <span className="material-symbols-outlined" data-icon="close">close</span>
+            </button>
+            <div className="text-center space-y-2">
+              <h3 className="text-xl font-headline font-bold text-white">Share Companion</h3>
+              <p className="text-xs text-slate-400">Let other developers join the hub</p>
+            </div>
+            <div className="aspect-square w-full bg-white rounded-2xl flex items-center justify-center p-4">
+              <div className="w-full h-full border-4 border-dashed border-slate-200 rounded-lg flex flex-col items-center justify-center opacity-30">
+                <span className="material-symbols-outlined text-4xl text-surface" data-icon="qr_code_2">qr_code_2</span>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div className="flex bg-surface-container-lowest rounded-xl p-1 border border-white/5">
+                <input
+                  className="flex-1 bg-transparent border-none text-xs text-slate-300 px-3 py-2 focus:ring-0"
+                  readOnly
+                  type="text"
+                  value="https://meetup.companion/paris"
+                />
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText("https://meetup.companion/paris");
+                    alert("Copied to clipboard!");
+                  }}
+                  className="bg-[#FF6C37] text-white px-4 rounded-lg text-[10px] font-bold uppercase tracking-wider"
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
